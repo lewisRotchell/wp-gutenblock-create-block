@@ -1,8 +1,16 @@
+#!/usr/bin/env node
+
 const fs = require("fs").promises;
 
-const prefix = process.argv[2] || "block";
+const prefix = process.argv[2];
+if (!prefix) {
+  return console.error("Please specify a prefix");
+}
 
-const blockName = process.argv[3] || "block";
+const blockName = process.argv[3];
+if (!blockName) {
+  return console.error("Please specify a block name");
+}
 
 const blockNamePhp = blockName.replace(/-/g, "_");
 
@@ -12,6 +20,11 @@ const blockTitle = blockName
   .replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));
 
 let renderType = process.argv[4];
+
+if (renderType != "php" && renderType != "js" && renderType != "both") {
+  console.error("Please specify a render type: php or js or both");
+  return;
+}
 
 const directoryName = `./src/blocks/${blockName}`;
 
@@ -33,7 +46,7 @@ const blockJson = {
   },
   editorScript: "file:./index.js",
   editorStyle: "file:./index.css",
-  style: [`${blockName}-style-frontend`],
+  style: [`${blockNamePhp}-style-frontend`],
 };
 
 const indexJs = `
@@ -55,7 +68,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 
 const Edit = ({ attributes, setAttributes }) => {
   return (
-    <div className="{...useBlockProps}">
+    <div className={...useBlockProps}>
         <h1>${blockName}</h1>
     </div>
   );
@@ -68,9 +81,8 @@ if (renderType === "js" || renderType === "both") {
     import { useBlockProps } from '@wordpress/block-editor';
 
     const Save = ({attributes}) => {
-        const {text, alignment} = attributes;
         return (
-            <div className="{...useBlockProps.save()}">
+            <div className={...useBlockProps.save()}>
                 <h1>${blockName}</h1>
             </div>
         );
@@ -105,10 +117,6 @@ const editorCss = ``;
 const styleCss = ``;
 
 async function createBlock() {
-  if (renderType != "php" && renderType != "js" && renderType != "both") {
-    console.error("Please specify a render type: php or js or both");
-    return;
-  }
   try {
     await fs.mkdir(directoryName);
     console.log("Directory created successfully!");
@@ -146,8 +154,6 @@ async function createBlock() {
     console.error(err);
     return;
   }
-
-  console.log(renderType);
 }
 
 createBlock();
