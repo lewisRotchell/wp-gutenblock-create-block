@@ -1,12 +1,19 @@
 {
-  "name": "wp-gutenblock-create-block",
+  "name": "@lewis-rotchell/wp-gutenberg-create-block",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "bin": {
+    "create-block": "./index.js"
+  },
   "keywords": [],
-  "author": "",
+  "author": "Lewis Rotchell",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lewisRotchell/wp-gutenblock-create-block.git"
+  },
   "license": "ISC"
 }
