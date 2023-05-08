@@ -12,12 +12,14 @@ if (!blockName) {
   return console.error("Please specify a block name");
 }
 
-const blockNamePhp = blockName.replace(/-/g, "_");
-
 //block.json title
+//replace _ with space and capitalize first letter of each word
 const blockTitle = blockName
-  .replace(/-/g, " ")
+  .replace(/_/g, " ")
   .replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));
+
+//replace _ with - for css class
+const blockClass = blockName.replace(/_/g, "-");
 
 let renderType = process.argv[4];
 
@@ -46,7 +48,7 @@ const blockJson = {
   },
   editorScript: "file:./index.js",
   editorStyle: "file:./index.css",
-  style: [`${blockNamePhp}-style-frontend`],
+  style: [`${blockName}-style-frontend`],
 };
 
 const indexJs = `
@@ -102,9 +104,9 @@ if (renderType === "php") {
 if (renderType === "php" || renderType === "both") {
   renderPhp = `
     <?php
-    function ${blockNamePhp}_render_cb( $attributes) {
+    function ${blockName}_render_cb( $attributes) {
         ob_start(); ?>
-        <div class="${prefix}-${blockName}">
+        <div class="${prefix}-${blockClass}">
             <h1>${blockName}</h1>
         </div>
         <?php
