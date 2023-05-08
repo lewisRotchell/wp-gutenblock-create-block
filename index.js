@@ -68,7 +68,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 
 const Edit = ({ attributes, setAttributes }) => {
   return (
-    <div className={...useBlockProps}>
+    <div {...useBlockProps}>
         <h1>${blockName}</h1>
     </div>
   );
@@ -82,7 +82,7 @@ if (renderType === "js" || renderType === "both") {
 
     const Save = ({attributes}) => {
         return (
-            <div className={...useBlockProps.save()}>
+            <div {...useBlockProps.save()}>
                 <h1>${blockName}</h1>
             </div>
         );
