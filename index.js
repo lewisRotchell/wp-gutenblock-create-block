@@ -19,7 +19,7 @@ const blockTitle = blockName
   .replace(/\w\S*/g, (w) => w.replace(/^\w/, (c) => c.toUpperCase()));
 
 //replace _ with - for css class
-const blockClass = blockName.replace(/_/g, "-");
+const blockNameWithDash = blockName.replace(/_/g, "-");
 
 let renderType = process.argv[4];
 
@@ -38,7 +38,7 @@ const blockJson = {
     "https://raw.githubusercontent.com/WordPress/gutenberg/trunk/schemas/json/block.json",
   apiVersion: 2,
   version: "1.0.0",
-  name: `${prefix}/${blockName}`,
+  name: `${prefix}/${blockNameWithDash}`,
   title: blockTitle,
   icon: "smiley",
   textdomain: prefix,
@@ -48,11 +48,12 @@ const blockJson = {
   },
   editorScript: "file:./index.js",
   editorStyle: "file:./index.css",
-  style: [`${blockName}-style-frontend`],
+  style: [`${blockNameWithDash}-style-frontend`],
 };
 
 const indexJs = `
 import { registerBlockType } from '@wordpress/blocks';
+import block from './block.json';
 
 import "./style.css";
 import "./editor.css";
@@ -60,7 +61,7 @@ import "./editor.css";
 import edit from './edit';
 import save from './save';
 
-registerBlockType('${prefix}/${blockName}', {
+registerBlockType('block.name', {
   edit,
   save,
 });`;
@@ -71,7 +72,7 @@ import { useBlockProps } from '@wordpress/block-editor';
 const Edit = ({ attributes, setAttributes }) => {
   return (
     <div {...useBlockProps}>
-        <h1>${blockName}</h1>
+        <h1>${blockTitle}</h1>
     </div>
   );
 };
@@ -85,7 +86,7 @@ if (renderType === "js" || renderType === "both") {
     const Save = ({attributes}) => {
         return (
             <div {...useBlockProps.save()}>
-                <h1>${blockName}</h1>
+                <h1>${blockTitle}</h1>
             </div>
         );
     }
@@ -106,7 +107,7 @@ if (renderType === "php" || renderType === "both") {
     <?php
     function ${blockName}_render_cb( $attributes) {
         ob_start(); ?>
-        <div class="${prefix}-${blockClass}">
+        <div class="${prefix}-${blockNameWithDash}">
             <h1>${blockName}</h1>
         </div>
         <?php
