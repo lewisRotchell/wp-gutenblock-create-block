@@ -40,4 +40,5 @@ The block will be saved in your theme's /src/blocks directory.
 ## Contributing
 
 If you find a bug or have a feature request, please open an issue on the [GitHub repository](https://github.com/lewisRotchell/wp-gutenblock-create-block).
+
 Pull requests are also welcome!
