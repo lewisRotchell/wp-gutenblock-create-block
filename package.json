@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "create-block": "./index.js"
+    "gutenberg-create-block": "./index.js"
   },
   "keywords": [],
   "author": "Lewis Rotchell",

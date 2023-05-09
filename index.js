@@ -61,7 +61,7 @@ import "./editor.css";
 import edit from './edit';
 import save from './save';
 
-registerBlockType('block.name', {
+registerBlockType( block.name, {
   edit,
   save,
 });`;
